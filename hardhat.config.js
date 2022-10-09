@@ -9,5 +9,9 @@ module.exports = {
         url: process.env.POKT_API_URL,
         accounts: [process.env.PRIVATE_KEY],
     },
+    polygon  : {
+      url: process.env.POKT_API_URL,
+      accounts: [process.env.PRIVATE_KEY],
+  },
   },
 };

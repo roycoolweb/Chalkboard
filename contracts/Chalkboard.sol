@@ -4,8 +4,20 @@ pragma solidity ^0.8.4;
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import { ByteHasher } from './helpers/ByteHasher.sol';
+import { IWorldID } from './interfaces/IWorldID.sol';
 
 contract Chalkboard is ERC721URIStorage {
+    using ByteHasher for bytes;
+
+    error InvalidNullifier();
+
+    IWorldID internal immutable worldId;
+
+    uint256 internal immutable groupId = 1;
+
+    mapping(uint256 => bool) internal nullifierHashes;
+
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
     Counters.Counter private _itemsSold;
@@ -30,11 +42,33 @@ contract Chalkboard is ERC721URIStorage {
       bool sold
     );
 
-    constructor() ERC721("Chalkboard", "CHB") {
+    constructor(IWorldID _worldId) ERC721("Chalkboard", "CHB") {
+      worldId = _worldId;
+
       owner = payable(msg.sender);
     }
 
-    function createToken(string memory tokenURI, uint256 price) public payable returns (uint) {
+    function createToken(
+      string memory tokenURI,
+      uint256 price,
+      address input,
+      uint256 root,
+      uint256 nullifierHash,
+      uint256[8] calldata proof
+    ) public payable returns (uint) {
+      if (nullifierHashes[nullifierHash]) revert InvalidNullifier();
+
+      worldId.verifyProof(
+        root,
+        groupId,
+        abi.encodePacked(input).hashToField(),
+        nullifierHash,
+        abi.encodePacked(address(this)).hashToField(),
+        proof
+      );
+
+      nullifierHashes[nullifierHash] = true;
+
       _tokenIds.increment();
       uint256 newTokenId = _tokenIds.current();
 
