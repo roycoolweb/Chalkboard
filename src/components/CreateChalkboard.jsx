@@ -1,9 +1,11 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function CreateChalkboard() {
     return (
         <div className='container'>
-            <h1>Chalkboard</h1>
+            <Link to='/gallery' className='btn btn-danger mt-2'>Back</Link>
+            <h1 className='mt-4'>Chalkboard</h1>
             <form className='form-width'>
                 <div className="mb-3 row">
                     <label for="name" className="col-sm-2 col-form-label">Name</label>

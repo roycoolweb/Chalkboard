@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom'
 import { MainContext } from '../MainContext'
 
 export default function Landing() {
-    const { items, addNumber } = useContext(MainContext)
+    const { connect_wallet } = useContext(MainContext)
     return (
         <div className='main'>
-            <h1 className='mb-5'>Chalkboard {items}</h1>
-            <button onClick={() => addNumber()}>Add</button>
+            <h1 className='mb-5'>Chalkboard</h1>
             <div className='card bg-dark card-width'>
                 <div className='card-body'>
                     <h5 className='card-title text-white'>Welcome</h5>

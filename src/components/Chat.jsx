@@ -34,7 +34,7 @@ export default function Chat({ wallet, address }) {
                     <input type="text" className="form-control" id="text" onChange={(e) => settext(e.target.value)}/>
                 </div>
             </div>
-            <button className='btn btn-primary btn-lg mt-1' onClick={start_chat}>
+            <button className='btn btn-primary btn-lg mt-1' onClick={send_message}>
                Send
             </button>
         </div>

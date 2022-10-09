@@ -22,7 +22,7 @@ export default function Gallery() {
                                     <h5 className='card-title'>Chalkboard #1</h5>
                                     <p className='card-text'>Chalkboard</p>
                                     <div className='d-grid gap-2'>
-                                        <Link to='/gallery' className='btn btn-primary btn-block'>View</Link>
+                                        <Link to='/chalkboard' className='btn btn-primary btn-block'>View</Link>
                                     </div>
                                 </div>
                             </div>
